@@ -1,0 +1,89 @@
+/* 1. Pengaturan bawaan sistem jika OS dalam mode gelap */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg:      #0F172A;
+    --color-fg:      #E2E8F0;
+    --color-surface: #1E293B;
+    --color-border:  #334155;
+    --color-primary: #7DA9F7;   /* versi lebih terang agar kontras tetap lolos */
+    --color-danger:  #FF8A8A;
+    --color-focus:   #FFC000;
+    --shadow-1:      0 1px 3px rgba(0, 0, 0, .45);
+  }
+}
+
+/* Sembunyikan checkbox bawaan secara rapi */
+.pengalih-tema {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 2. Pilihan manual ketika sistem bawaan terang: klik beralih ke TEMA GELAP */
+:root:has(#tema:checked),
+body.tema-aktif {
+  --color-bg:      #0F172A;
+  --color-fg:      #E2E8F0;
+  --color-surface: #1E293B;
+  --color-border:  #334155;
+  --color-primary: #7DA9F7;
+  --color-danger:  #FF8A8A;
+  --color-focus:   #FFC000;
+  --shadow-1:      0 1px 3px rgba(0, 0, 0, .45);
+}
+
+/* 3. Pilihan manual ketika sistem bawaan gelap: klik beralih ke TEMA TERANG (PUTIH) */
+@media (prefers-color-scheme: dark) {
+  :root:has(#tema:checked),
+  body.tema-aktif {
+    --color-bg:      #F8FAFC;
+    --color-fg:      #0F172A;
+    --color-surface: #FFFFFF;
+    --color-border:  #D1D5DB;
+    --color-primary: #1D3A8C;
+    --color-danger:  #B00020;
+    --color-focus:   #2563EB;
+    --shadow-1:      0 1px 3px rgba(0, 0, 0, .10);
+  }
+}
+
+/* Teks label tombol pengalih tema agar otomatis menyesuaikan */
+.label-tema-terang {
+  display: none;
+}
+.label-tema-gelap {
+  display: inline;
+}
+
+:root:has(#tema:checked) .label-tema-terang,
+body.tema-aktif .label-tema-terang {
+  display: inline;
+}
+:root:has(#tema:checked) .label-tema-gelap,
+body.tema-aktif .label-tema-gelap {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .label-tema-terang {
+    display: inline;
+  }
+  .label-tema-gelap {
+    display: none;
+  }
+
+  :root:has(#tema:checked) .label-tema-terang,
+  body.tema-aktif .label-tema-terang {
+    display: none;
+  }
+  :root:has(#tema:checked) .label-tema-gelap,
+  body.tema-aktif .label-tema-gelap {
+    display: inline;
+  }
+}
