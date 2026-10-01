@@ -14,16 +14,18 @@ img {
 
 html {
   font-size: 100%;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
 }
 
 body {
-  font-family: var(--font-base, 'Raleway', sans-serif);
+  font-family: var(--font-base, sans-serif);
   font-size: var(--text-md);
   line-height: 1.6;
   color: var(--color-fg);
-  background: var(--color-bg);
+  background-color: var(--color-bg);
   padding: var(--space-4);
-  max-width: 56rem;
+  max-width: 60rem;
   margin-inline: auto;
 }
 

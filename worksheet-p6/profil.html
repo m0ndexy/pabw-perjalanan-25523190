@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+   <title>Mengatur Jam Perjalanan</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="tokens.css">
+   <link rel="stylesheet" href="base.css">
+   <link rel="stylesheet" href="layout.css">
+   <link rel="stylesheet" href="komponen.css">
+   <link rel="stylesheet" href="tema.css">
+   <link rel="stylesheet" href="responsif.css">
+</head>
+
+<body>
+   <div class="page">
+      <header>
+         <input type="checkbox" id="tema" class="pengalih-tema">
+         <div class="header-baris">
+            <h1>Mengatur Jam Perjalanan</h1>
+            <div class="header-kanan">
+               <nav class="navbar">
+                  <ul>
+                     <li><a href="#bagian-1">Home</a></li>
+                     <li><a href="#bagian-2">Journey</a></li>
+                     <li><a href="#footer">Footer</a></li>
+                  </ul>
+               </nav>
+               <label for="tema" class="tombol-tema">
+                  <span class="label-tema-terang">Tema Terang</span>
+                  <span class="label-tema-gelap">Tema Gelap</span>
+               </label>
+            </div>
+         </div>
+      </header>
+
+      <main class="isi">
+         <section id="bagian-1" class="kartu">
+            <h2>Daftar Jadwal Perjalanan</h2>
+            <div class="tabel-wadah table-wrap">
+               <table>
+                  <caption>Jadwal Keberangkatan dan Estimasi Waktu Perjalanan</caption>
+                  <thead>
+                     <tr>
+                        <th scope="col">Rute Perjalanan</th>
+                        <th scope="col">Jam Berangkat</th>
+                        <th scope="col">Jam Tiba</th>
+                        <th scope="col">Moda Transportasi</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <th scope="row">Yogyakarta – J`akarta</th>
+                        <td>07:00 WIB</td>
+                        <td>14:30 WIB</td>
+                        <td>Kereta Api Eksekutif</td>
+                     </tr>
+                     <tr>
+                        <th scope="row">Yogyakarta – Bandung</th>
+                        <td>08:15 WIB</td>
+                        <td>15:00 WIB</td>
+                        <td>Kereta Api Bisnis</td>
+                     </tr>
+                     <tr>
+                        <th scope="row">Yogyakarta – Surabaya</th>
+                        <td>09:30 WIB</td>
+                        <td>14:00 WIB</td>
+                        <td>Kereta Cepat</td>
+                     </tr>
+                     <tr>
+                        <th scope="row">Yogyakarta – Semarang</th>
+                        <td>13:00 WIB</td>
+                        <td>16:30 WIB</td>
+                        <td>Bus Antarkota</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </section>
+         
+         <section id="bagian-2" class="kartu">
+            <h2>Formulir Rencana Perjalanan</h2>
+            <figure>
+               <img src="images.jpg" alt="moving out" width="640" height="360" loading="lazy">
+               <figcaption>Gambar seekor semut yang tampak sedih memegang sebatang kayu dengan tas yang diikat di
+                  ujungnya yang sedang pergi melakukan perjananan.</figcaption>
+            </figure>
+            <form action="/simpan" method="post">
+               <div class="form-kolom">
+                  <label for="tanggal">Tanggal Berangkat</label>
+                  <input type="date" id="tanggal" name="tanggal" required>
+                  <span class="pesan-galat">Tanggal berangkat wajib diisi.</span>
+               </div>
+               <div class="form-kolom">
+                  <label for="jam-terbang">Jam Terbang</label>
+                  <input type="text" id="jam-terbang" name="jam-terbang" required>
+                  <span class="pesan-galat">Jam terbang wajib diisi.</span>
+               </div>
+               <div class="form-kolom">
+                  <label for="jam-tiba">Jam Tiba</label>
+                  <input type="text" id="jam-tiba" name="jam-tiba" required>
+                  <span class="pesan-galat">Jam tiba wajib diisi.</span>
+               </div>
+               <div class="kartu__kaki">
+                  <button type="submit">Simpan</button>
+               </div>
+            </form>
+         </section>
+      </main>
+
+      <footer id="footer">
+         <p>Ahmad Dani Maulana · 25523190 · 2026</p>
+      </footer>
+   </div>
+
+   <script>
+      const pengalihTema = document.getElementById('tema');
+      if (pengalihTema) {
+         pengalihTema.addEventListener('change', () => {
+            document.body.classList.toggle('tema-aktif', pengalihTema.checked);
+         });
+      }
+   </script>
+</body>
+
+</html>
