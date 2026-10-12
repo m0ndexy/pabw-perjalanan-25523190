@@ -178,7 +178,8 @@ button:hover {
 }
 
 /* Keadaan Tidak Sah */
-input:user-invalid {
+input:user-invalid,
+input[aria-invalid="true"] {
   border-color: var(--color-danger);
   border-width: 2px;
 }
@@ -189,8 +190,15 @@ input:user-invalid {
   font-size: var(--text-sm);
 }
 
-.form-kolom:has(input:user-invalid) .pesan-galat {
+.form-kolom:has(input:user-invalid) .pesan-galat,
+.form-kolom:has(input[aria-invalid="true"]) .pesan-galat {
   display: block;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  filter: grayscale(40%);
 }
 
 /* Lembar A: Baris Tombol Filter, Daftar Proyek, & Pesan Kosong */

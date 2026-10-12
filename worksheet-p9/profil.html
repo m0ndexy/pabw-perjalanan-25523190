@@ -90,21 +90,21 @@
                <figcaption>Gambar seekor semut yang tampak sedih memegang sebatang kayu dengan tas yang diikat di
                   ujungnya yang sedang pergi melakukan perjananan.</figcaption>
             </figure>
-            <form action="/simpan" method="post">
+            <form action="/simpan" method="post" novalidate>
                <div class="form-kolom">
                   <label for="tanggal">Tanggal Berangkat</label>
                   <input type="date" id="tanggal" name="tanggal" required>
-                  <span class="pesan-galat">Tanggal berangkat wajib diisi.</span>
+                  <span class="pesan-galat">Tanggal berangkat wajib diisi (pilih tanggal keberangkatan).</span>
                </div>
                <div class="form-kolom">
                   <label for="jam-terbang">Jam Terbang</label>
                   <input type="text" id="jam-terbang" name="jam-terbang" required>
-                  <span class="pesan-galat">Jam terbang wajib diisi.</span>
+                  <span class="pesan-galat">Jam terbang wajib diisi (contoh format: 08:00 WIB).</span>
                </div>
                <div class="form-kolom">
                   <label for="jam-tiba">Jam Tiba</label>
                   <input type="text" id="jam-tiba" name="jam-tiba" required>
-                  <span class="pesan-galat">Jam tiba wajib diisi.</span>
+                  <span class="pesan-galat">Jam tiba wajib diisi (contoh format: 14:30 WIB).</span>
                </div>
                <div class="kartu__kaki">
                   <button type="submit">Simpan</button>
@@ -114,10 +114,11 @@
          
          <section id="proyek" class="kartu sorotan">
             <h2>Daftar Proyek Portofolio</h2>
-            <div id="baris-filter" class="baris-filter">
+            <div id="filter" class="baris-filter">
                <button type="button" class="filter" data-kategori="semua">Semua</button>
                <button type="button" class="filter" data-kategori="Web">Web</button>
                <button type="button" class="filter" data-kategori="Mobile">Mobile</button>
+               <button type="button" class="filter" data-kategori="Data">Data</button>
             </div>
             <ul id="daftar" class="galeri"></ul>
             <p id="pesan-kosong" class="pesan-kosong" hidden>Tidak ada proyek yang sesuai filter.</p>
