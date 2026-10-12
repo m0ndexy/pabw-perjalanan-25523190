@@ -1,0 +1,119 @@
+/* ==========================================================================
+   TEMA (THEME) - Light Mode & Dark Mode
+   Palet Acuan:
+   - #800020 (Burgundy / Maroon)
+   - #F3E6D5 (Warm Cream / Soft Beige)
+   - #FFF9F2 (Warm Ivory / Off-White)
+   - #D45060 (Muted Rose / Crimson)
+   ========================================================================== */
+
+/* 1. TEMA TERANG (LIGHT MODE) - Nilai Bawaan (Default)
+   Berlaku saat OS dalam mode terang dan tombol pengalih belum dicentang */
+:root {
+  --color-bg: #F3E6D5;
+  --color-surface: #FFF9F2;
+  --color-border: #E0CDB8;
+  --color-fg: #2A0812;
+  --color-fg-muted: #7A5C58;
+  --color-primary: #800020;
+  --color-danger: #D45060;
+  --color-focus: #800020;
+  --shadow-1: 0 1px 3px rgba(128, 0, 32, 0.08);
+}
+
+/* Sembunyikan checkbox bawaan secara aksesibel */
+.pengalih-tema {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 2. Pilihan manual ketika sistem bawaan terang: klik beralih ke TEMA GELAP */
+:root:has(#tema:checked),
+body.tema-aktif {
+  --color-bg: #16080E;
+  --color-surface: #241119;
+  --color-border: #482330;
+  --color-fg: #FFF9F2;
+  --color-fg-muted: #F3E6D5;
+  --color-primary: #E56B7C;
+  --color-danger: #FF8595;
+  --color-focus: #FFC000;
+  --shadow-1: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+}
+
+/* 3. Pengaturan otomatis jika OS bawaan sistem dalam TEMA GELAP */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #16080E;
+    --color-surface: #241119;
+    --color-border: #482330;
+    --color-fg: #FFF9F2;
+    --color-fg-muted: #F3E6D5;
+    --color-primary: #E56B7C;
+    --color-danger: #FF8595;
+    --color-focus: #FFC000;
+    --shadow-1: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+  }
+
+  /* 4. Pilihan manual ketika sistem bawaan gelap: klik beralih ke TEMA TERANG */
+  :root:has(#tema:checked),
+  body.tema-aktif {
+    --color-bg: #F3E6D5;
+    --color-surface: #FFF9F2;
+    --color-border: #E0CDB8;
+    --color-fg: #2A0812;
+    --color-fg-muted: #7A5C58;
+    --color-primary: #800020;
+    --color-danger: #D45060;
+    --color-focus: #800020;
+    --shadow-1: 0 1px 3px rgba(128, 0, 32, 0.08);
+  }
+}
+
+/* ==========================================================================
+   Teks label tombol pengalih tema agar otomatis menyesuaikan
+   ========================================================================== */
+.label-tema-terang {
+  display: none;
+}
+
+.label-tema-gelap {
+  display: inline;
+}
+
+:root:has(#tema:checked) .label-tema-terang,
+body.tema-aktif .label-tema-terang {
+  display: inline;
+}
+
+:root:has(#tema:checked) .label-tema-gelap,
+body.tema-aktif .label-tema-gelap {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .label-tema-terang {
+    display: inline;
+  }
+
+  .label-tema-gelap {
+    display: none;
+  }
+
+  :root:has(#tema:checked) .label-tema-terang,
+  body.tema-aktif .label-tema-terang {
+    display: none;
+  }
+
+  :root:has(#tema:checked) .label-tema-gelap,
+  body.tema-aktif .label-tema-gelap {
+    display: inline;
+  }
+}
