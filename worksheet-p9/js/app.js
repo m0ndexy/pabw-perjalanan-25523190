@@ -98,3 +98,11 @@ if (elemenCari) {
 const inputSimulasi = "4";
 const totalJamKalkulasi = Number(inputSimulasi) + 2;
 console.log(`Kasus 3 ditangani aman: Number("${inputSimulasi}") + 2 = ${totalJamKalkulasi} (bukan "${inputSimulasi}2")`);
+
+// Ekspor untuk pemakaian modul di dom.js (Lembar A.3 type="module")
+if (typeof window !== "undefined") {
+  window.daftarProyek = daftarProyek;
+  window.profil = profil;
+}
+
+export { daftarProyek, profil, buatPerkenalan, formatKeahlian };
