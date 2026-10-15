@@ -1,12 +1,15 @@
-const alamat = "data/proyek.json";
+const alamat = "data/proyeki.json";
 
 export async function ambilProyek() {
-  const respons = await fetch(alamat);
-  console.log('status', respons.status, 'ok', respons.ok);
-  if (!respons.ok) {
-    console.log('throw');
-    throw new Error('status ' + respons.status);
-  }
-  return respons.json();
+    try {
+        const respons = await fetch(alamat);
+        if (!respons.ok) throw new Error('status ' + respons.status);
+        const data = await respons.json();
+        return data;
+    } catch (galat) {
+        console.error('gagal memuat', galat.message);
+        throw galat;
+    }
 }
+
 
