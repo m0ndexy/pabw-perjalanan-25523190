@@ -1,4 +1,6 @@
 import { ambilProyek } from "./api.js";
+import { render, pasangFilter, aturMemuat, tampilkanGalat } from "./dom.js";
+
 ambilProyek().then((daftar) => console.log(daftar));
 
 

@@ -1,8 +1,7 @@
-import { daftarProyek } from "./app.js";
-
 const wadah = document.querySelector("#daftar");
 const barisFilter = document.querySelector("#filter");
-const kosong = document.querySelector("#pesan-kosong");
+const kosong = document.querySelector("#kosong") || document.querySelector("#pesan-kosong");
+const muat = document.querySelector("#muat");
 const formRencana = document.querySelector("form");
 const inputTanggal = document.querySelector("#tanggal");
 const inputJamTerbang = document.querySelector("#jam-terbang");
@@ -16,13 +15,27 @@ function buatKartu(proyek) {
   return li;
 }
 
+function aturMemuat(sedangMemuat) {
+  if (muat) muat.hidden = !sedangMemuat;
+}
+
+function tampilkanGalat(pesan) {
+  if (kosong) {
+    kosong.textContent = pesan;
+    kosong.hidden = false;
+  }
+}
+
 function render(daftar = []) {
   if (!wadah) return;
 
   wadah.textContent = "";
 
   if (daftar.length === 0) {
-    if (kosong) kosong.hidden = false;
+    if (kosong) {
+      kosong.textContent = "Belum ada data.";
+      kosong.hidden = false;
+    }
     return;
   }
   if (kosong) kosong.hidden = true;
@@ -42,9 +55,14 @@ function tandaiTombolAktif(tombolAktif) {
   });
 }
 
-const data = typeof daftarProyek !== "undefined" ? daftarProyek : (window.daftarProyek || []);
+function pasangFilter(daftar = []) {
+  if (!barisFilter) return;
 
-if (barisFilter) {
+  const tombolSemua = document.querySelector('#filter button[data-kategori="semua"]');
+  if (tombolSemua) {
+    tandaiTombolAktif(tombolSemua);
+  }
+
   barisFilter.addEventListener("click", (event) => {
     const tombol = event.target.closest("button");
     if (!tombol) return;
@@ -52,8 +70,8 @@ if (barisFilter) {
     tandaiTombolAktif(tombol);
 
     const kategori = tombol.dataset.kategori;
-    const terpilih = data.filter(
-      (proyek) => kategori === "semua" || proyek.kategori === kategori
+    const terpilih = daftar.filter(
+      (proyek) => kategori === "semua" || proyek.kategori?.toLowerCase() === kategori?.toLowerCase()
     );
 
     render(terpilih);
@@ -126,22 +144,17 @@ if (formRencana) {
   });
 }
 
-const tombolSemua = document.querySelector('#filter button[data-kategori="semua"]');
-if (tombolSemua) {
-  tandaiTombolAktif(tombolSemua);
-}
-
-if (Array.isArray(data)) {
-  render(data);
-}
-
 export {
   buatKartu,
   render,
   renderDaftar,
+  pasangFilter,
+  aturMemuat,
+  tampilkanGalat,
   tandaiTombolAktif,
   validasiKolom,
   periksaSeluruhForm,
   wadah,
   kosong,
+  muat,
 };
