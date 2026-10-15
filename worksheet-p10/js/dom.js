@@ -1,32 +1,33 @@
 const wadah = document.querySelector("#daftar");
 const barisFilter = document.querySelector("#filter");
 const kosong = document.querySelector("#kosong") || document.querySelector("#pesan-kosong");
-const muat = document.querySelector("#muat");
+const muatEl = document.querySelector("#muat");
 const formRencana = document.querySelector("form");
 const inputTanggal = document.querySelector("#tanggal");
 const inputJamTerbang = document.querySelector("#jam-terbang");
 const inputJamTiba = document.querySelector("#jam-tiba");
 const tombolKirim = formRencana ? formRencana.querySelector('button[type="submit"]') : null;
 
-function buatKartu(proyek) {
+export function buatKartu(proyek) {
   const li = document.createElement("li");
   li.className = "kartu";
   li.textContent = proyek.judul;
   return li;
 }
 
-function aturMemuat(sedangMemuat) {
-  if (muat) muat.hidden = !sedangMemuat;
+export function aturMemuat(aktif) {
+  if (muatEl) muatEl.hidden = !aktif;
 }
 
-function tampilkanGalat(pesan) {
+export function tampilkanGalat(pesan) {
+  if (wadah) wadah.textContent = "";
   if (kosong) {
     kosong.textContent = pesan;
     kosong.hidden = false;
   }
 }
 
-function render(daftar = []) {
+export function render(daftar = []) {
   if (!wadah) return;
 
   wadah.textContent = "";
@@ -47,15 +48,15 @@ function render(daftar = []) {
   wadah.append(fragment);
 }
 
-const renderDaftar = render;
+export const renderDaftar = render;
 
-function tandaiTombolAktif(tombolAktif) {
+export function tandaiTombolAktif(tombolAktif) {
   document.querySelectorAll("#filter button").forEach((tombol) => {
     tombol.classList.toggle("aktif", tombol === tombolAktif);
   });
 }
 
-function pasangFilter(daftar = []) {
+export function pasangFilter(daftar = []) {
   if (!barisFilter) return;
 
   const tombolSemua = document.querySelector('#filter button[data-kategori="semua"]');
@@ -70,11 +71,11 @@ function pasangFilter(daftar = []) {
     tandaiTombolAktif(tombol);
 
     const kategori = tombol.dataset.kategori;
-    const terpilih = daftar.filter(
-      (proyek) => kategori === "semua" || proyek.kategori?.toLowerCase() === kategori?.toLowerCase()
+    render(
+      daftar.filter(
+        (p) => kategori === "semua" || p.kategori?.toLowerCase() === kategori?.toLowerCase()
+      )
     );
-
-    render(terpilih);
   });
 }
 
@@ -145,16 +146,9 @@ if (formRencana) {
 }
 
 export {
-  buatKartu,
-  render,
-  renderDaftar,
-  pasangFilter,
-  aturMemuat,
-  tampilkanGalat,
-  tandaiTombolAktif,
   validasiKolom,
   periksaSeluruhForm,
   wadah,
   kosong,
-  muat,
+  muatEl as muat,
 };
