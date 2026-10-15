@@ -1,0 +1,6 @@
+[
+  { "id": 1, "judul": "Halaman Profil", "tahun": 2026, "selesai": true, "kategori": "Web" },
+  { "id": 2, "judul": "Katalog Produk", "tahun": 2026, "selesai": false, "kategori": "Web" },
+  { "id": 3, "judul": "Sistem Jadwal Perjalanan", "tahun": 2026, "selesai": true, "kategori": "Web" },
+  { "id": 4, "judul": "Aplikasi Tiket Bus", "tahun": 2025, "selesai": true, "kategori": "Mobile" }
+]
