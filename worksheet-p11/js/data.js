@@ -17,7 +17,7 @@ export function buatPerkenalan({ namaLengkap = "Anonim", peranSaya = "Mahasiswa"
 export const formatKeahlian = (daftar = []) => daftar.join(" · ");
 
 export function saring(daftar = [], kategori = "semua") {
-  if (!kategori || kategori === "semua") return daftar;
+  if (!kategori || kategori.toLowerCase() === "semua") return daftar;
   return daftar.filter(
     (proyek) => proyek.kategori?.toLowerCase() === kategori.toLowerCase()
   );

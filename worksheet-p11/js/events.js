@@ -1,13 +1,13 @@
 // js/events.js: pendengar peristiwa
-import { pilihKategori } from './state.js';
+import { pilihKategori, tambahFavorit, aturUlang } from './state.js';
 
 export function pasangPendengar() {
-  // 1. Filter kategori
+  // 1. Delegasi klik filter kategori
   const barisFilter = document.querySelector("#filter");
   if (barisFilter) {
     barisFilter.addEventListener("click", (event) => {
       const tombol = event.target.closest("button");
-      if (!tombol) return;
+      if (!tombol || tombol.id === "atur-ulang") return;
       const kategori = tombol.dataset.kategori;
       if (kategori) {
         pilihKategori(kategori);
@@ -15,7 +15,25 @@ export function pasangPendengar() {
     });
   }
 
-  // 2. Pengalih tema
+  // 2. Delegasi klik tombol favorit di wadah daftar (Lembar C.3)
+  const wadah = document.querySelector("#daftar");
+  if (wadah) {
+    wadah.addEventListener("click", (event) => {
+      const tombol = event.target.closest(".favorit");
+      if (!tombol) return;
+      tambahFavorit(Number(tombol.dataset.id));
+    });
+  }
+
+  // 3. Tombol atur ulang (bila ada)
+  const tombolAturUlang = document.querySelector("#atur-ulang");
+  if (tombolAturUlang) {
+    tombolAturUlang.addEventListener("click", () => {
+      aturUlang();
+    });
+  }
+
+  // 4. Pengalih tema
   const pengalihTema = document.getElementById("tema");
   if (pengalihTema) {
     pengalihTema.addEventListener("change", () => {
@@ -23,7 +41,7 @@ export function pasangPendengar() {
     });
   }
 
-  // 3. Validasi dan submit formulir rencana perjalanan
+  // 5. Validasi dan submit formulir rencana perjalanan
   const formRencana = document.querySelector("form");
   const inputTanggal = document.querySelector("#tanggal");
   const inputJamTerbang = document.querySelector("#jam-terbang");

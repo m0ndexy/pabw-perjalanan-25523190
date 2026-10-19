@@ -1,4 +1,4 @@
-// js/state.js
+// js/state.js: pusat keadaan aplikasi
 import { render } from './dom.js';
 
 export const state = {
@@ -7,8 +7,30 @@ export const state = {
   favorit: []
 };
 
+// Ekspos ke window agar bisa diperiksa dari Console (Lembar C.5)
+if (typeof window !== "undefined") {
+  window.state = state;
+}
+
 export function isiProyek(daftar) {
   state.daftarProyek = daftar;
+  render(state);
+}
+
+export function pilihKategori(nilai) {
+  state.kategoriAktif = nilai;
+  simpan(state);
+  render(state);
+}
+
+// Lembar C.3 & C.4: salinan baru, bukan push
+export function tambahFavorit(id) {
+  if (state.favorit.includes(id)) {
+    state.favorit = state.favorit.filter((fId) => fId !== id); // toggle agar bisa dibatalkan
+  } else {
+    state.favorit = [...state.favorit, id];
+  }
+  simpan(state);
   render(state);
 }
 
@@ -21,16 +43,29 @@ export function simpan(stateSekarang = state) {
     kategoriAktif: stateSekarang.kategoriAktif,
     favorit: stateSekarang.favorit
   };
-  localStorage.setItem(KUNCI, JSON.stringify(isi));
+  try {
+    localStorage.setItem(KUNCI, JSON.stringify(isi));
+  } catch (e) {
+    console.error("Gagal menyimpan ke localStorage", e);
+  }
 }
 
 export function muat() {
-  try { return JSON.parse(localStorage.getItem(KUNCI)); }
-  catch { return null; }        // simpanan rusak: pakai nilai bawaan
+  try {
+    const isi = JSON.parse(localStorage.getItem(KUNCI));
+    if (isi?.versi !== VERSI) {
+      localStorage.removeItem(KUNCI); // bentuk lama: buang
+      return null;
+    }
+    return isi;
+  } catch {
+    localStorage.removeItem(KUNCI); // isi rusak: buang
+    return null;
+  }
 }
 
-export function pulihkan(isi) {   // dipanggil sekali dari mulai() di app.js
-  if (!isi) return;               // kunjungan pertama: nilai bawaan tetap
+export function pulihkan(isi) { // dipanggil sekali dari mulai() di app.js
+  if (!isi) return; // kunjungan pertama: nilai bawaan tetap
   if (isi.kategoriAktif) state.kategoriAktif = isi.kategoriAktif;
   if (Array.isArray(isi.favorit)) state.favorit = isi.favorit;
 }
@@ -39,21 +74,5 @@ export function aturUlang() {
   localStorage.removeItem(KUNCI);
   state.kategoriAktif = 'semua';
   state.favorit = [];
-  render(state);
-}
-
-export function pilihKategori(kategori) {
-  state.kategoriAktif = kategori;
-  simpan(state);
-  render(state);
-}
-
-export function toggleFavorit(id) {
-  if (state.favorit.includes(id)) {
-    state.favorit = state.favorit.filter((fId) => fId !== id);
-  } else {
-    state.favorit.push(id);
-  }
-  simpan(state);
   render(state);
 }

@@ -1,5 +1,5 @@
 // js/dom.js: murni tampilan
-import { profil, buatPerkenalan, formatKeahlian, saring } from './data.js';
+import { saring } from './data.js';
 
 const wadah = document.querySelector("#daftar");
 const kosong = document.querySelector("#kosong") || document.querySelector("#pesan-kosong");
@@ -19,34 +19,44 @@ export function tampilkanGalat(pesan) {
 
 export function tandaiTombolAktif(kategoriAktif = "semua") {
   document.querySelectorAll("#filter button").forEach((tombol) => {
-    tombol.classList.toggle("aktif", tombol.dataset.kategori?.toLowerCase() === kategoriAktif?.toLowerCase());
+    tombol.classList.toggle(
+      "aktif",
+      tombol.dataset.kategori?.toLowerCase() === (kategoriAktif || "semua").toLowerCase()
+    );
   });
 }
 
-export function buatKartu(proyek, adalahFavorit = false) {
+// dom.js: buatKartu() dari P9, ditambah satu tombol (Lembar C.3)
+export function buatKartu(proyek, favorit = []) {
   const li = document.createElement("li");
   li.className = "kartu";
-  if (adalahFavorit) li.classList.add("favorit");
-  li.textContent = proyek.judul;
+
+  const spanJudul = document.createElement("span");
+  spanJudul.textContent = proyek.judul;
+  li.append(spanJudul);
+
+  const tombol = document.createElement("button");
+  tombol.type = "button";
+  tombol.className = "favorit";
+  tombol.dataset.id = proyek.id;
+  tombol.textContent = favorit.includes(Number(proyek.id)) ? "★" : "☆";
+  li.append(tombol);
+
   return li;
 }
 
-export function render(stateOrDaftar = []) {
+// Lembar C.2: render(data) menjadi render(state)
+export function render(state) {
   if (!wadah) return;
 
-  wadah.textContent = "";
+  wadah.textContent = ""; // 1. kosongkan
+  tandaiTombolAktif(state?.kategoriAktif);
 
-  const daftarAsli = Array.isArray(stateOrDaftar)
-    ? stateOrDaftar
-    : (stateOrDaftar.daftarProyek || []);
-  const kategoriAktif = stateOrDaftar.kategoriAktif || "semua";
-  const daftar = Array.isArray(stateOrDaftar)
-    ? stateOrDaftar
-    : saring(daftarAsli, kategoriAktif);
+  const daftarProyek = state?.daftarProyek || [];
+  const kategoriAktif = state?.kategoriAktif || "semua";
+  const tampil = saring(daftarProyek, kategoriAktif); // dari data.js
 
-  tandaiTombolAktif(kategoriAktif);
-
-  if (daftar.length === 0) {
+  if (tampil.length === 0) { // 2. keadaan kosong
     if (kosong) {
       kosong.textContent = "Belum ada data.";
       kosong.hidden = false;
@@ -56,9 +66,8 @@ export function render(stateOrDaftar = []) {
   if (kosong) kosong.hidden = true;
 
   const fragment = document.createDocumentFragment();
-  daftar.forEach((proyek) => {
-    const fav = stateOrDaftar.favorit ? stateOrDaftar.favorit.includes(proyek.id) : false;
-    fragment.append(buatKartu(proyek, fav));
+  tampil.forEach((item) => { // 3. isi ulang
+    fragment.append(buatKartu(item, state?.favorit || []));
   });
   wadah.append(fragment);
 }

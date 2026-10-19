@@ -241,3 +241,18 @@ ul#daftar {
   font-style: italic;
   margin-top: var(--space-3);
 }
+
+.favorit {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  padding: 0 var(--space-1);
+  line-height: 1;
+  float: right;
+}
+
+.favorit:hover {
+  transform: scale(1.15);
+}
